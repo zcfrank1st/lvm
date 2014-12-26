@@ -1,33 +1,59 @@
 #! /usr/bin/env bash
 
-### constants 
+# Constants 
 LUA_VERSIONS_DIR=/Users/zcfrank1st/Downloads/lua-versions
-VERSIONS=[1-2]
-LVM_VERSION=0.1
-###
+LUA_VERSIONS=5.1;5,2
+#
 
-usage()
-{
-  echo "usage: lvm use 5.x  => choose target version to use"
-  echo "       lvm update   => update lvm"
-  echo "       lvm version  => show lvm version"
+# Check version
+LVM_VERSION=`cat LVM_VERSION`
+REPO_LVM_VERSION=`curl https://raw.githubusercontent.com/zcfrank1st/lvm/master/LVM_VERSION`
+if [[ $LVM_VERSION != $REPO_LVM_VERSION ]]
+then
+  echo "A new version is applyed, please use 'lvm -l' to update lvm"
+  exit 0
+fi
+
+# Common
+usage(){
+cat << EOF
+Usage: lvm [-hvl] [-u VERSION]
+    -h          display the help and exit
+    -v          show current lvm version
+    -u VERSION  choose lua verison to use, as lvm -u 5.1
+    -l          level up lvm
+    -s          show current contained lua versions
+EOF
 }
 
-version()
-{
+version(){
     echo "lvm current version : "$LVM_VERSION
 }
-# TODO 
-if [[ $1 != "use" ]]
-then
-  usage
-  exit -1
-fi
-if [[ $2 != "5."$VERSIONS ]]
-then
-  usage
-  echo "choose the right version as 5.1"
-fi
 
-ln -f $LUA_VERSIONS_DIR/libs/lua$2 /usr/local/bin/lua
-ln -f $LUA_VERSIONS_DIR/libs/luac$2 /usr/local/bin/luac
+while getopts "hvlu:" opt; do
+    case "$opt" in
+        h)
+            usage
+            exit 0
+            ;;
+        v)  
+            version
+            exit 0
+            ;;
+        l)  
+            # level up
+            ;;
+        s)
+            echo $LUA_VERSIONS
+        u)
+            pverison=$OPTARG
+            ln -f $LUA_VERSIONS_DIR/libs/lua$pversion /usr/local/bin/lua
+            ln -f $LUA_VERSIONS_DIR/libs/luac$pversion /usr/local/bin/luac
+            exit 0
+            ;;
+        '?')
+            usage >&2
+            exit 1
+            ;;
+     esac
+done
