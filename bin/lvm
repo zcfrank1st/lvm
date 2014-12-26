@@ -2,12 +2,12 @@
 
 # Constants 
 LUA_VERSIONS_DIR=/Users/zcfrank1st/Downloads/lua-versions
-LUA_VERSIONS="5.1;5.2"
+LUA_VERSIONS="5.1 5.2"
 #
 
 # Check version
 LVM_VERSION=`cat $LUA_VERSIONS_DIR/LVM_VERSION`
-REPO_LVM_VERSION=`curl https://raw.githubusercontent.com/zcfrank1st/lvm/master/LVM_VERSION`
+REPO_LVM_VERSION=`curl https://raw.githubusercontent.com/zcfrank1st/lvm/master/LVM_VERSION 2>/dev/null`
 if [[ $LVM_VERSION != $REPO_LVM_VERSION ]]
 then
   echo "A new version is applyed, please use 'lvm -l' to update lvm"
@@ -30,8 +30,20 @@ version(){
     echo "lvm current version : "$LVM_VERSION
 }
 
-while getopts "hvlu:" opt; do
+if [[ $1 == '' ]]
+then
+    usage
+    exit -1
+fi
+
+while getopts "u:hvls" opt; do
     case "$opt" in
+        u)
+            ln -f $LUA_VERSIONS_DIR/libs/lua$OPTARG /usr/local/bin/lua
+            ln -f $LUA_VERSIONS_DIR/libs/luac$OPTARG /usr/local/bin/luac
+            echo "lua version changed!"
+            exit 0
+            ;;
         h)
             usage
             exit 0
@@ -45,10 +57,6 @@ while getopts "hvlu:" opt; do
             ;;
         s)
             echo $LUA_VERSIONS
-        u)
-            pverison=$OPTARG
-            ln -f $LUA_VERSIONS_DIR/libs/lua$pversion /usr/local/bin/lua
-            ln -f $LUA_VERSIONS_DIR/libs/luac$pversion /usr/local/bin/luac
             exit 0
             ;;
         '?')
@@ -57,3 +65,4 @@ while getopts "hvlu:" opt; do
             ;;
      esac
 done
+shift $(( OPTIND - 1 ))
