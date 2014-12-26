@@ -54,7 +54,8 @@ while getopts "u:hvls" opt; do
             exit 0
             ;;
         l)  
-            # level up lvm
+            cd $LUA_VERSIONS_DIR
+            git pull
             ;;
         s)
             echo $LUA_VERSIONS
