@@ -1,0 +1,34 @@
+#! /usr/bin/env bash
+
+### constants 
+LUA_VERSIONS_DIR=/Users/zcfrank1st/Downloads/lua-versions
+VERSIONS=[1-2]
+LVM_VERSION=0.1
+###
+
+usage()
+{
+  echo "usage: lvm use 5.x  => choose target version to use"
+  echo "       lvm update   => update lvm"
+  echo "       lvm version  => show lvm version"
+}
+
+version()
+{
+    echo "lvm current version : "$LVM_VERSION
+}
+
+# TODO 
+if [[ $1 != "use" ]]
+then
+  usage
+  exit -1
+fi
+if [[ $2 != "5."$VERSIONS ]]
+then
+  usage
+  echo "choose the right version as 5.1"
+fi
+
+ln -f $LUA_VERSIONS_DIR/libs/lua$2 /usr/local/bin/lua
+ln -f $LUA_VERSIONS_DIR/libs/luac$2 /usr/local/bin/luac
