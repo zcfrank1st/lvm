@@ -17,7 +17,6 @@ version()
 {
     echo "lvm current version : "$LVM_VERSION
 }
-
 # TODO 
 if [[ $1 != "use" ]]
 then
