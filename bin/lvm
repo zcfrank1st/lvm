@@ -2,11 +2,11 @@
 
 # Constants 
 LUA_VERSIONS_DIR=/Users/zcfrank1st/Downloads/lua-versions
-LUA_VERSIONS=5.1;5,2
+LUA_VERSIONS="5.1;5.2"
 #
 
 # Check version
-LVM_VERSION=`cat LVM_VERSION`
+LVM_VERSION=`cat $LUA_VERSIONS_DIR/LVM_VERSION`
 REPO_LVM_VERSION=`curl https://raw.githubusercontent.com/zcfrank1st/lvm/master/LVM_VERSION`
 if [[ $LVM_VERSION != $REPO_LVM_VERSION ]]
 then
@@ -41,7 +41,7 @@ while getopts "hvlu:" opt; do
             exit 0
             ;;
         l)  
-            # level up
+            # level up lvm
             ;;
         s)
             echo $LUA_VERSIONS
