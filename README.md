@@ -2,6 +2,8 @@
 
 ## usage
 
+WARINIG: fit for macOS X 10.10
+
 install:
 `git clone https://github.com/zcfrank1st/lvm.git`
 
@@ -13,7 +15,10 @@ use:
 ## licence
 MIT
 
-TODO 整合luarocks
+P.S.
+To use with luarocks: switch different versions of lua, build and install luarocks, then all things work!
+
+Happy Coding!
 
 
 
