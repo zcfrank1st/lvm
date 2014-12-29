@@ -13,5 +13,7 @@ use:
 ## licence
 MIT
 
+TODO 整合luarocks
+
 
 

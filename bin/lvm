@@ -18,7 +18,7 @@ fi
 # Common
 usage(){
 cat << EOF
-Usage: lvm [-hvl] [-u VERSION]
+Usage: lvm [-hvls] [-u VERSION]
     -h          display the help and exit
     -v          show current lvm version
     -u VERSION  choose lua verison to use, as lvm -u 5.1
@@ -42,6 +42,8 @@ while getopts "u:hvls" opt; do
         u)
             ln -f $LUA_VERSIONS_DIR/libs/lua$OPTARG /usr/local/bin/lua
             ln -f $LUA_VERSIONS_DIR/libs/luac$OPTARG /usr/local/bin/luac
+            # ln -f $LUA_VERSIONS_DIR/libs/luarocks$OPTARG /usr/local/bin/luarocks
+            # ln -f $LUA_VERSIONS_DIR/libs/luarocks-admin$OPTARG /usr/local/bin/luarocks-admin
             echo "lua version changed!"
             exit 0
             ;;
